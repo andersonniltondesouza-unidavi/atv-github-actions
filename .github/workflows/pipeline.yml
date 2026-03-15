@@ -1,1 +1,48 @@
+name: atv-github-actions
 
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: download
+        uses: actions/checkout@v3
+      
+      - name: config
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: simu
+        run: echo "simulação feita cou sucesso" 
+
+  test:
+    name: teste
+    needs: build 
+    runs-on: ubuntu-latest
+    steps:
+      - name: download
+        uses: actions/checkout@v3
+        
+      - name: script
+        run: python app.py
+        
+      - name: simu
+        run: echo "testes feitos com sucesso!"
+
+  deploy:
+    name: deploy
+    needs: test 
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: echo "Fazendo deploy"
+      
+      - name: sucesso
+        run: echo "deploy feito com sucesso"
